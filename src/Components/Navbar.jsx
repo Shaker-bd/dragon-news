@@ -1,8 +1,10 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
 import UserIcon from "../assets/user.png";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
+  const { user } = use(AuthContext);
   const links = (
     <>
       <li>
@@ -17,8 +19,9 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar w-11/12 mx-auto my-3">
+    <div className="navbar w-11/12 mx-auto">
       <div className="navbar-start">
+        {user && user.email}
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -37,9 +40,10 @@ const Navbar = () => {
               />{" "}
             </svg>
           </div>
+
           <ul
             tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow"
           >
             {links}
           </ul>
@@ -50,7 +54,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-end flex gap-2">
         <img src={UserIcon} alt="" />
-        <a className="btn btn-primary">Button</a>
+        <Link to="/auth/login" className="btn btn-primary">
+          Login
+        </Link>
       </div>
     </div>
   );
